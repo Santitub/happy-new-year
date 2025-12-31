@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎆 Año Nuevo 2026</title>
+    <title>🎆 Año Nuevo 2027</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -398,12 +398,12 @@
         }
 
         /* Mensaje alternativo cuando ya pasó */
-        .already-2026 {
+        .already-2027 {
             text-align: center;
             padding: 20px;
         }
 
-        .already-2026 h2 {
+        .already-2027 h2 {
             font-family: 'Orbitron', monospace;
             font-size: 3rem;
             background: linear-gradient(135deg, #00f5ff, #8b5cf6);
@@ -426,7 +426,7 @@
         </div>
 
         <div class="countdown-section">
-            <div class="countdown-title">✦ Cuenta atrás para 2026 ✦</div>
+            <div class="countdown-title">✦ Cuenta atrás para 2027 ✦</div>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <div class="countdown-number" id="days">000</div>
@@ -452,7 +452,7 @@
     <div class="celebration-overlay" id="celebrationOverlay">
         <canvas id="fireworksCanvas"></canvas>
         <div class="celebration-content">
-            <div class="year-display">2026</div>
+            <div class="year-display">2027</div>
             <div class="happy-new-year">¡Feliz Año Nuevo!</div>
         </div>
     </div>
@@ -460,7 +460,7 @@
     <script>
         // ============ CONFIGURACIÓN ============
         const SPAIN_TIMEZONE = 'Europe/Madrid';
-        const TARGET_YEAR = 2026;
+        const TARGET_YEAR = 2027;
         
         // ============ ELEMENTOS DOM ============
         const currentTimeEl = document.getElementById('currentTime');
@@ -534,8 +534,8 @@
         function getTimeUntilNewYear() {
             const now = new Date();
             
-            // 1 de enero 2026 a las 00:00:00 hora de España (UTC+1 en invierno)
-            const target = new Date('2026-01-01T00:00:00+01:00');
+            // 1 de enero 2027 a las 00:00:00 hora de España (UTC+1 en invierno)
+            const target = new Date('2027-01-01T00:00:00+01:00');
             
             const diff = target - now;
             
@@ -842,8 +842,8 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        console.log('%c🎆 Countdown 2026 - España', 'font-size: 20px; color: #00f5ff;');
-        console.log('%cEsperando la medianoche del 1 de Enero de 2026...', 'color: #888;');
+        console.log('%c🎆 Countdown 2027 - España', 'font-size: 20px; color: #00f5ff;');
+        console.log('%cEsperando la medianoche del 1 de Enero de 2027...', 'color: #888;');
     </script>
 </body>
 </html>
