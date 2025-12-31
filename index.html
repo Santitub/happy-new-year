@@ -534,12 +534,8 @@
         function getTimeUntilNewYear() {
             const now = new Date();
             
-            // Crear fecha objetivo en hora española
-            const targetDate = new Date(`${TARGET_YEAR}-01-01T00:00:00`);
-            
-            // Ajustar a zona horaria española
-            const spainOffset = getSpainOffset();
-            const target = new Date(targetDate.getTime() - spainOffset * 60 * 1000);
+            // 1 de enero 2026 a las 00:00:00 hora de España (UTC+1 en invierno)
+            const target = new Date('2026-01-01T00:00:00+01:00');
             
             const diff = target - now;
             
@@ -554,14 +550,7 @@
             
             return { days, hours, minutes, seconds, finished: false };
         }
-
-        function getSpainOffset() {
-            const now = new Date();
-            const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-            const spainDate = new Date(now.toLocaleString('en-US', { timeZone: SPAIN_TIMEZONE }));
-            return (utcDate - spainDate) / (1000 * 60);
-        }
-
+        
         // ============ ACTUALIZAR RELOJ ============
         function updateClock() {
             const spain = getSpainTime();
