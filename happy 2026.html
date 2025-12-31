@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎆 Año Nuevo 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Fondo animado */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 200, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 0, 100, 0.1) 0%, transparent 60%),
+                linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 100%);
+            z-index: -3;
+        }
+
+        /* Estrellas */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Contenedor principal */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Ubicación */
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .location::before,
+        .location::after {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+        }
+
+        /* Reloj principal */
+        .clock-container {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .current-time {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00f5ff 0%, #8b5cf6 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 5px;
+            position: relative;
+            text-shadow: 0 0 80px rgba(0, 245, 255, 0.5);
+        }
+
+        .current-time::after {
+            content: attr(data-time);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #00f5ff 0%, #8b5cf6 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(30px);
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .current-date {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 15px;
+            font-weight: 300;
+        }
+
+        /* Countdown */
+        .countdown-section {
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .countdown-title {
+            font-size: 1.1rem;
+            color: #f472b6;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .countdown-item:hover::before {
+            left: 100%;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.1);
+        }
+
+        .countdown-number {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Decoración de la cuenta atrás */
+        .countdown-item:nth-child(1) .countdown-number { color: #00f5ff; }
+        .countdown-item:nth-child(2) .countdown-number { color: #8b5cf6; }
+        .countdown-item:nth-child(3) .countdown-number { color: #f472b6; }
+        .countdown-item:nth-child(4) .countdown-number { color: #fbbf24; }
+
+        /* ============ CELEBRACIÓN ============ */
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: none;
+            background: radial-gradient(ellipse at center, #1a1a3a 0%, #0a0a1a 100%);
+        }
+
+        .celebration-overlay.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Canvas fuegos artificiales */
+        #fireworksCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Contenido celebración */
+        .celebration-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 110;
+            pointer-events: none;
+        }
+
+        .year-display {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(6rem, 25vw, 15rem);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 25%, #c084fc 50%, #00f5ff 75%, #ffd700 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite, yearEntry 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 60px rgba(255, 215, 0, 0.5));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes yearEntry {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.3) rotateX(90deg);
+            }
+            60% { 
+                transform: scale(1.1) rotateX(-10deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotateX(0deg);
+            }
+        }
+
+        .happy-new-year {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 600;
+            color: white;
+            margin-top: 20px;
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.8s forwards;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+
+        .spain-flag {
+            font-size: 4rem;
+            margin-top: 30px;
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+        }
+
+        @keyframes popIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+
+        /* Confeti */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 20px;
+            top: -20px;
+            z-index: 105;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotateZ(0deg) rotateX(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg) rotateX(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Partículas brillantes */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 106;
+            animation: sparkleAnim ease-out forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        /* Flash inicial */
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .flash-overlay.active {
+            animation: flashBang 0.8s ease-out forwards;
+        }
+
+        @keyframes flashBang {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .countdown-item {
+                padding: 20px 10px;
+            }
+        }
+
+        /* Mensaje alternativo cuando ya pasó */
+        .already-2026 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .already-2026 h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00f5ff, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-container" id="mainContainer">
+        <div class="clock-container">
+            <div class="current-time" id="currentTime" data-time="00:00:00">00:00:00</div>
+            <div class="current-date" id="currentDate"></div>
+        </div>
+
+        <div class="countdown-section">
+            <div class="countdown-title">✦ Cuenta atrás para 2026 ✦</div>
+            <div class="countdown-grid">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">000</div>
+                    <div class="countdown-label">Días</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutos</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebración -->
+    <div class="celebration-overlay" id="celebrationOverlay">
+        <canvas id="fireworksCanvas"></canvas>
+        <div class="celebration-content">
+            <div class="year-display">2026</div>
+            <div class="happy-new-year">¡Feliz Año Nuevo!</div>
+        </div>
+    </div>
+
+    <script>
+        // ============ CONFIGURACIÓN ============
+        const SPAIN_TIMEZONE = 'Europe/Madrid';
+        const TARGET_YEAR = 2026;
+        
+        // ============ ELEMENTOS DOM ============
+        const currentTimeEl = document.getElementById('currentTime');
+        const currentDateEl = document.getElementById('currentDate');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const mainContainer = document.getElementById('mainContainer');
+        const celebrationOverlay = document.getElementById('celebrationOverlay');
+        const flashOverlay = document.getElementById('flashOverlay');
+        const starsContainer = document.getElementById('starsContainer');
+        const fireworksCanvas = document.getElementById('fireworksCanvas');
+
+        let celebrationActive = false;
+        let fireworksCtx;
+        let fireworks = [];
+        let particles = [];
+
+        // ============ CREAR ESTRELLAS ============
+        function createStars() {
+            const count = Math.min(150, window.innerWidth / 10);
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--delay', (Math.random() * 3) + 's');
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // ============ OBTENER HORA ESPAÑA ============
+        function getSpainTime() {
+            const options = { timeZone: SPAIN_TIMEZONE };
+            const now = new Date();
+            
+            // Obtener componentes de la hora en España
+            const formatter = new Intl.DateTimeFormat('es-ES', {
+                timeZone: SPAIN_TIMEZONE,
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: false
+            });
+            
+            const parts = formatter.formatToParts(now);
+            const dateParts = {};
+            parts.forEach(part => {
+                dateParts[part.type] = part.value;
+            });
+            
+            return {
+                hours: dateParts.hour.padStart(2, '0'),
+                minutes: dateParts.minute.padStart(2, '0'),
+                seconds: dateParts.second.padStart(2, '0'),
+                day: dateParts.day,
+                month: dateParts.month,
+                year: dateParts.year
+            };
+        }
+
+        // ============ CALCULAR TIEMPO RESTANTE ============
+        function getTimeUntilNewYear() {
+            const now = new Date();
+            
+            // Crear fecha objetivo en hora española
+            const targetDate = new Date(`${TARGET_YEAR}-01-01T00:00:00`);
+            
+            // Ajustar a zona horaria española
+            const spainOffset = getSpainOffset();
+            const target = new Date(targetDate.getTime() - spainOffset * 60 * 1000);
+            
+            const diff = target - now;
+            
+            if (diff <= 0) {
+                return { days: 0, hours: 0, minutes: 0, seconds: 0, finished: true };
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            return { days, hours, minutes, seconds, finished: false };
+        }
+
+        function getSpainOffset() {
+            const now = new Date();
+            const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+            const spainDate = new Date(now.toLocaleString('en-US', { timeZone: SPAIN_TIMEZONE }));
+            return (utcDate - spainDate) / (1000 * 60);
+        }
+
+        // ============ ACTUALIZAR RELOJ ============
+        function updateClock() {
+            const spain = getSpainTime();
+            const timeString = `${spain.hours}:${spain.minutes}:${spain.seconds}`;
+            
+            currentTimeEl.textContent = timeString;
+            currentTimeEl.setAttribute('data-time', timeString);
+            
+            const dateOptions = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                timeZone: SPAIN_TIMEZONE
+            };
+            currentDateEl.textContent = new Date().toLocaleDateString('es-ES', dateOptions);
+            
+            // Actualizar countdown
+            const remaining = getTimeUntilNewYear();
+            
+            if (remaining.finished && !celebrationActive) {
+                startCelebration();
+            } else {
+                daysEl.textContent = String(remaining.days).padStart(3, '0');
+                hoursEl.textContent = String(remaining.hours).padStart(2, '0');
+                minutesEl.textContent = String(remaining.minutes).padStart(2, '0');
+                secondsEl.textContent = String(remaining.seconds).padStart(2, '0');
+            }
+        }
+
+        // ============ SISTEMA DE FUEGOS ARTIFICIALES ============
+        class Firework {
+            constructor(x, y, targetY, color) {
+                this.x = x;
+                this.y = y;
+                this.targetY = targetY;
+                this.color = color;
+                this.speed = 4 + Math.random() * 3;
+                this.exploded = false;
+                this.trail = [];
+                this.maxTrail = 8;
+            }
+
+            update() {
+                if (!this.exploded) {
+                    this.trail.push({ x: this.x, y: this.y });
+                    if (this.trail.length > this.maxTrail) this.trail.shift();
+                    
+                    this.y -= this.speed;
+                    this.x += (Math.random() - 0.5) * 0.5;
+                    
+                    if (this.y <= this.targetY) {
+                        this.explode();
+                    }
+                }
+            }
+
+            explode() {
+                this.exploded = true;
+                const particleCount = 80 + Math.floor(Math.random() * 40);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = (Math.PI * 2 / particleCount) * i;
+                    const speed = 2 + Math.random() * 4;
+                    
+                    particles.push({
+                        x: this.x,
+                        y: this.y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        color: this.color,
+                        alpha: 1,
+                        decay: 0.015 + Math.random() * 0.01,
+                        size: 2 + Math.random() * 2
+                    });
+                }
+            }
+
+            draw(ctx) {
+                if (!this.exploded) {
+                    // Estela
+                    this.trail.forEach((point, i) => {
+                        const alpha = i / this.trail.length;
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255, 200, 100, ${alpha * 0.5})`;
+                        ctx.fill();
+                    });
+                    
+                    // Cabeza
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = '#fff';
+                    ctx.fill();
+                }
+            }
+        }
+
+        function initFireworks() {
+            fireworksCanvas.width = window.innerWidth;
+            fireworksCanvas.height = window.innerHeight;
+            fireworksCtx = fireworksCanvas.getContext('2d');
+        }
+
+        function launchFirework() {
+            const colors = [
+                { r: 255, g: 100, b: 100 },
+                { r: 100, g: 255, b: 100 },
+                { r: 100, g: 200, b: 255 },
+                { r: 255, g: 255, b: 100 },
+                { r: 255, g: 100, b: 255 },
+                { r: 255, g: 180, b: 100 },
+                { r: 180, g: 100, b: 255 },
+                { r: 100, g: 255, b: 200 }
+            ];
+            
+            const x = Math.random() * fireworksCanvas.width;
+            const y = fireworksCanvas.height;
+            const targetY = 100 + Math.random() * (fireworksCanvas.height * 0.4);
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            fireworks.push(new Firework(x, y, targetY, color));
+        }
+
+        function animateFireworks() {
+            if (!celebrationActive) return;
+            
+            fireworksCtx.fillStyle = 'rgba(10, 10, 26, 0.15)';
+            fireworksCtx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+            
+            // Actualizar y dibujar fuegos
+            fireworks = fireworks.filter(fw => {
+                fw.update();
+                fw.draw(fireworksCtx);
+                return !fw.exploded;
+            });
+            
+            // Actualizar y dibujar partículas
+            particles = particles.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.05; // gravedad
+                p.alpha -= p.decay;
+                
+                if (p.alpha > 0) {
+                    fireworksCtx.beginPath();
+                    fireworksCtx.arc(p.x, p.y, p.size * p.alpha, 0, Math.PI * 2);
+                    fireworksCtx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.alpha})`;
+                    fireworksCtx.fill();
+                    return true;
+                }
+                return false;
+            });
+            
+            // Lanzar nuevos fuegos
+            if (Math.random() < 0.08) {
+                launchFirework();
+            }
+            
+            requestAnimationFrame(animateFireworks);
+        }
+
+        // ============ CONFETI ============
+        function createConfetti() {
+            const colors = ['#ff0000', '#ffd700', '#00ff00', '#00bfff', '#ff00ff', '#ff6600', '#ffffff'];
+            const confettiCount = 100;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti-piece';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (5 + Math.random() * 10) + 'px';
+                    confetti.style.height = (10 + Math.random() * 15) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    confetti.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    confetti.addEventListener('animationend', () => confetti.remove());
+                }, i * 20);
+            }
+        }
+
+        // ============ PARTÍCULAS BRILLANTES ============
+        function createSparkles() {
+            const sparkleInterval = setInterval(() => {
+                if (!celebrationActive) {
+                    clearInterval(sparkleInterval);
+                    return;
+                }
+                
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = '✦';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.fontSize = (15 + Math.random() * 25) + 'px';
+                sparkle.style.color = ['#ffd700', '#ffffff', '#00f5ff', '#ff6b6b'][Math.floor(Math.random() * 4)];
+                sparkle.style.animationDuration = (0.5 + Math.random() * 1) + 's';
+                
+                document.body.appendChild(sparkle);
+                
+                sparkle.addEventListener('animationend', () => sparkle.remove());
+            }, 100);
+        }
+
+        // ============ INICIAR CELEBRACIÓN ============
+        function startCelebration() {
+            if (celebrationActive) return;
+            celebrationActive = true;
+            
+            // Flash
+            flashOverlay.classList.add('active');
+            setTimeout(() => flashOverlay.classList.remove('active'), 800);
+            
+            // Mostrar celebración
+            celebrationOverlay.classList.add('active');
+            
+            // Iniciar fuegos artificiales
+            initFireworks();
+            
+            // Lanzar varios fuegos al inicio
+            for (let i = 0; i < 8; i++) {
+                setTimeout(launchFirework, i * 150);
+            }
+            
+            animateFireworks();
+            
+            // Confeti
+            createConfetti();
+            setTimeout(createConfetti, 3000);
+            setTimeout(createConfetti, 6000);
+            
+            // Sparkles
+            createSparkles();
+            
+            // Vibración (móviles)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+            
+            // Sonido
+            playSound();
+        }
+
+        // ============ SONIDO ============
+        function playSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                function boom(time, freq) {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.frequency.setValueAtTime(freq, time);
+                    osc.frequency.exponentialRampToValueAtTime(20, time + 0.5);
+                    
+                    gain.gain.setValueAtTime(0.3, time);
+                    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.5);
+                    
+                    osc.start(time);
+                    osc.stop(time + 0.5);
+                }
+                
+                const now = audioCtx.currentTime;
+                boom(now, 150);
+                boom(now + 0.3, 180);
+                boom(now + 0.7, 120);
+                boom(now + 1.2, 200);
+            } catch(e) {}
+        }
+
+        // ============ RESIZE ============
+        window.addEventListener('resize', () => {
+            if (celebrationActive && fireworksCanvas) {
+                fireworksCanvas.width = window.innerWidth;
+                fireworksCanvas.height = window.innerHeight;
+            }
+        });
+
+        // ============ INICIALIZACIÓN ============
+        createStars();
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        console.log('%c🎆 Countdown 2026 - España', 'font-size: 20px; color: #00f5ff;');
+        console.log('%cEsperando la medianoche del 1 de Enero de 2026...', 'color: #888;');
+    </script>
+</body>
+</html>
